@@ -1,0 +1,52 @@
+-- Create users table
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100),
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create photographers table
+CREATE TABLE IF NOT EXISTS photographers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    price_range VARCHAR(20) NOT NULL,
+    location VARCHAR(50) NOT NULL,
+    description TEXT,
+    profile_image VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create photos table
+CREATE TABLE IF NOT EXISTS photos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    photographer_id INT,
+    image_path VARCHAR(255) NOT NULL,
+    title VARCHAR(100),
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (photographer_id) REFERENCES photographers(id) ON DELETE CASCADE
+);
+
+-- Insert sample photographers
+INSERT INTO photographers (name, category, price_range, location, description, profile_image) VALUES
+('Sarah Johnson', 'Portrait', '<$200', 'Queensland', 'Specializing in natural light portraits', '/static/images/photographer1.jpg'),
+('Mike Chen', 'Wedding', '$200-$500', 'New South Wales', 'Capturing your special moments', '/static/images/photographer2.jpg'),
+('Emma Wilson', 'Fashion', '>$500', 'Victoria', 'Editorial and commercial fashion photography', '/static/images/photographer3.jpg'),
+('David Brown', 'Event', '<$200', 'Queensland', 'Corporate and private events', '/static/images/photographer4.jpg'),
+('Lisa Martinez', 'Newborn', '$200-$500', 'Queensland', 'Gentle newborn photography', '/static/images/photographer5.jpg'),
+('Tom Anderson', 'Family', '<$200', 'Western Australia', 'Creating lasting family memories', '/static/images/photographer6.jpg');
+
+-- Insert sample photos for carousel
+INSERT INTO photos (photographer_id, image_path, title, description) VALUES
+(1, '/static/images/1.jpg', 'Portrait Session', 'Beautiful outdoor portrait'),
+(2, '/static/images/2.jpg', 'Wedding Day', 'Romantic wedding ceremony'),
+(3, '/static/images/3.jpg', 'Fashion Editorial', 'Modern fashion shoot'),
+(4, '/static/images/4.jpg', 'Corporate Event', 'Professional event coverage'),
+(5, '/static/images/5.jpg', 'Newborn Beauty', 'Precious newborn moments'),
+(1, '/static/images/6.jpeg', 'Family Portrait', 'Happy family together'),
+(2, '/static/images/7.jpg', 'Engagement Session', 'Couple in love'),
+(3, '/static/images/8.jpg', 'Studio Fashion', 'High-end fashion photography'),
+(4, '/static/images/9.jpg', 'Event Highlights', 'Memorable event moments');
